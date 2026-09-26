@@ -1,31 +1,88 @@
 # PS3HEN 3.5.0 on HFW 4.93.1 via Package Manager
 
-A community-tested method for getting **PS3HEN 3.5.0 working on a PS3 running HFW 4.93.1** when the normal PS3HEN installer automatically moves to the newer **PS3HEN 3.6.0**.
+A community-tested method for installing **PS3HEN 3.5.0 on HFW 4.93.1** when the normal PS3HEN installer automatically moves to the newer **PS3HEN 3.6.0**.
 
 This guide documents a method that was successfully tested on a PS3 running **HFW 4.93.1**.
 
-> **Important:** This is an independently documented, community-tested method. It is **not an official downgrade procedure** from the PS3HEN developers, and compatibility with every PS3 model/configuration has not been confirmed.
+> **Important:** This is an independently documented, community-tested method. It is **not an official downgrade procedure from the PS3HEN developers**, and compatibility with every PS3 model/configuration has not been confirmed. Use it at your own risk.
 
 ---
 
-# Why This Guide Exists
+## Table of Contents
 
-While installing HEN on **HFW 4.93.1**, the normal installation process can install **PS3HEN 3.5.0** and then detect that **PS3HEN 3.6.0** is the latest available version.
+* [The Problem](#the-problem)
+* [The Tested Method](#the-tested-method)
+* [Requirements](#requirements)
+* [Step 1 — Start With HFW 4.93.1](#step-1--start-with-hfw-4931)
+* [Step 2 — Install PS3HEN 3.6.0](#step-2--install-ps3hen-360)
+* [Step 3 — Prepare the USB Drive](#step-3--prepare-the-usb-drive)
+* [Step 4 — Verify the HEN 3.5.0 Package](#step-4--verify-the-hen-350-package)
+* [Step 5 — Insert the USB](#step-5--insert-the-usb)
+* [Step 6 — Open Package Manager](#step-6--open-package-manager)
+* [Step 7 — Install HEN 3.5.0](#step-7--install-hen-350)
+* [Step 8 — Enable HEN](#step-8--enable-hen)
+* [Step 9 — Verify the Result](#step-9--verify-the-result)
+* [Why This Works](#why-this-works)
+* [Tested Configuration](#tested-configuration)
+* [Useful Resources](#useful-resources)
+* [Important Notes](#important-notes)
+* [Troubleshooting](#troubleshooting)
+* [Short Version](#short-version)
+* [Credits](#credits)
+* [Package Redistribution](#package-redistribution)
+* [Compatibility Reports](#compatibility-reports)
+* [Disclaimer](#disclaimer)
 
-If you specifically want to use **PS3HEN 3.5.0**, the normal installer may therefore leave you on 3.6.0.
+---
 
-During testing, the following method successfully resulted in **PS3HEN 3.5.0 being installed**:
+# The Problem
+
+On **HFW 4.93.1**, the normal PS3HEN installation process can install or update to **PS3HEN 3.6.0**.
+
+If you specifically want **PS3HEN 3.5.0**, the normal online installer may not provide an option to select the older version.
+
+During testing, the following method successfully resulted in **PS3HEN 3.5.0 being installed and enabled**:
+
+```text
+HFW 4.93.1
+     ↓
+Install PS3HEN 3.6.0
+     ↓
+Prepare PS3HEN 3.5.0 HEN.pkg
+     ↓
+Install HEN.pkg through Package Manager
+     ↓
+Enable HEN
+     ↓
+PS3HEN 3.5.0
+```
+
+---
+
+# The Tested Method
+
+The key idea is simple:
+
+**Do not try to stop the normal installer from installing 3.6.0.**
+
+Instead:
+
+1. Install **PS3HEN 3.6.0** normally.
+2. Obtain the correct **PS3HEN 3.5.0 `HEN.pkg`**.
+3. Put it on a **FAT32 USB drive**.
+4. Install it manually through **Package Manager**.
+5. Run **★ Enable HEN**.
+
+The tested result was:
 
 ```text
 HFW 4.93.1
       ↓
-Install PS3HEN 3.6.0
+PS3HEN 3.6.0
       ↓
-Prepare the PS3HEN 3.5.0 HEN.pkg
+Install PS3HEN 3.5.0 HEN.pkg
       ↓
-Install HEN.pkg using Package Manager
-      ↓
-Enable HEN
+★ Enable HEN
       ↓
 PS3HEN 3.5.0
 ```
@@ -38,19 +95,20 @@ You need:
 
 * A compatible PS3
 * **HFW 4.93.1**
-* PS3HEN **3.6.0**
+* PS3HEN **3.6.0** installed
 * A USB flash drive
 * USB formatted as **FAT32**
 * The correct **PS3HEN 3.5.0 `HEN.pkg`**
 * Access to **Package Manager**
+* A backup of important PS3 data is recommended
 
-This guide does **not** provide or redistribute the HEN package.
+This guide **does not provide or redistribute the HEN package**.
 
-Use the original PS3HEN project/release sources to obtain the appropriate files.
+Obtain the required files from appropriate original/legitimate sources.
 
 ---
 
-# Part 1 — Start With HFW 4.93.1
+# Step 1 — Start With HFW 4.93.1
 
 Your PS3 should already be running:
 
@@ -58,7 +116,7 @@ Your PS3 should already be running:
 HFW 4.93.1
 ```
 
-You can check your firmware version from:
+You can check the firmware version from:
 
 **Settings → System Settings → System Information**
 
@@ -68,49 +126,49 @@ The system software should show:
 4.93.1
 ```
 
-Do not follow this guide if you are using a completely different firmware version without first confirming compatibility.
+Do not assume this guide applies to other firmware versions. The tested configuration documented here is **HFW 4.93.1**.
 
 ---
 
-# Part 2 — Install PS3HEN 3.6.0
+# Step 2 — Install PS3HEN 3.6.0
 
 The first part of this method intentionally installs **PS3HEN 3.6.0**.
 
-Use the normal, legitimate PS3HEN installation procedure for your HFW version.
+Use the normal PS3HEN installation procedure appropriate for **HFW 4.93.1**.
 
-At the end of this step, your PS3 should have:
+Allow the installer to install **PS3HEN 3.6.0**.
 
-```text
-PS3HEN 3.6.0
-```
+Once HEN 3.6.0 is installed and working, you do not need to repeatedly run the online installer.
 
 ### Why install 3.6.0 if the goal is 3.5.0?
 
-This is the unusual part of the method.
+This is the unusual part of the workaround.
 
-Instead of trying to make the online installer stay on 3.5.0, we allow it to install the newer 3.6.0 first.
+Instead of trying to force the online installer to stay on 3.5.0, allow it to install the newer 3.6.0 first.
 
-We then use **Package Manager** to install the 3.5.0 package manually.
+After that, install the desired **3.5.0 package manually through Package Manager**.
 
-The tested sequence is therefore:
+The important sequence is:
 
 ```text
-3.5.0 → 3.6.0 → manually install 3.5.0
+HFW 4.93.1
+     ↓
+HEN 3.6.0
+     ↓
+Manually install HEN 3.5.0
 ```
-
-The important part is that the **3.5.0 package is installed manually through Package Manager**.
 
 ---
 
-# Part 3 — Prepare the USB Drive
+# Step 3 — Prepare the USB Drive
 
-Use a USB flash drive formatted as:
+Format the USB flash drive as:
 
 ```text
 FAT32
 ```
 
-The folder structure must be:
+Create the following folder structure:
 
 ```text
 USB ROOT
@@ -118,38 +176,13 @@ USB ROOT
     └── HEN.pkg
 ```
 
-In other words, the complete path should be:
+The complete path should therefore be:
 
 ```text
 /PS3/HEN.pkg
 ```
 
-### Important
-
-The file must be called:
-
-```text
-HEN.pkg
-```
-
-and it must be inside the:
-
-```text
-PS3
-```
-
-folder.
-
-Do **not** put it directly in the root of the USB like this:
-
-```text
-USB/
-└── HEN.pkg
-```
-
-That is the wrong structure for this procedure.
-
-The correct structure is:
+### Correct
 
 ```text
 USB/
@@ -157,40 +190,57 @@ USB/
     └── HEN.pkg
 ```
 
+### Incorrect
+
+```text
+USB/
+└── HEN.pkg
+```
+
+The `HEN.pkg` file must be inside the `PS3` folder.
+
 ---
 
-# Part 4 — Make Sure the Package Is PS3HEN 3.5.0
+# Step 4 — Verify the HEN 3.5.0 Package
 
-Before installing the package, make sure the `HEN.pkg` you are using is actually the **PS3HEN 3.5.0 package**.
+Before installing anything, make sure the package you are using is actually the intended **PS3HEN 3.5.0 package**.
 
-Do not assume that every file named `HEN.pkg` is 3.5.0.
+Do not assume that every file named:
+
+```text
+HEN.pkg
+```
+
+is PS3HEN 3.5.0.
+
+Do **not** simply rename a different package to `HEN.pkg`.
 
 The purpose of this guide is specifically:
 
 ```text
 PS3HEN 3.6.0
-        ↓
+       ↓
 PS3HEN 3.5.0
 ```
 
-The package should come from the appropriate original/legitimate PS3HEN release source.
+Use the appropriate original/legitimate source for the required package.
 
 ---
 
-# Part 5 — Insert the USB Into the PS3
+# Step 5 — Insert the USB
 
 Once the USB is prepared:
 
 1. Safely eject the USB from your computer.
-2. Insert it into the PS3.
+2. Insert the USB into the PS3.
 3. Turn on the PS3 if it is currently off.
-4. Make sure the PS3 has booted normally.
+4. Allow the PS3 to boot normally.
 
 ---
 
-# Part 6 — Open Package Manager
+# Step 6 — Open Package Manager
 
-On the PS3 XMB:
+From the PS3 XMB:
 
 **Game → Package Manager**
 
@@ -204,33 +254,33 @@ Then select:
 
 The PS3 should scan the USB for installable packages.
 
-You should see the package you placed in:
+You should see:
 
 ```text
-PS3/HEN.pkg
+HEN.pkg
 ```
 
-Select it.
+Select the package.
 
 ---
 
-# Part 7 — Install HEN 3.5.0
+# Step 7 — Install HEN 3.5.0
 
-Select the `HEN.pkg` and allow the installation to complete.
+Select `HEN.pkg`.
 
-Do **not** turn off the PS3 while the package is being installed.
+Allow the package installation to complete.
+
+**Do not turn off the PS3 during installation.**
 
 The tested result was that the **3.5.0 package installed over the existing 3.6.0 HEN installation**.
 
-After installation, the PS3 should contain the 3.5.0 HEN installation.
+Once installation is complete, continue to the next step.
 
 ---
 
-# Part 8 — Enable HEN
+# Step 8 — Enable HEN
 
-After the package installation finishes:
-
-Go to:
+After the package installation finishes, return to:
 
 **Game → ★ Enable HEN**
 
@@ -238,15 +288,15 @@ Select:
 
 **★ Enable HEN**
 
-Allow the process to finish.
+Allow the process to finish normally.
 
 The PS3 should return to the XMB with HEN enabled.
 
 ---
 
-# Part 9 — Verify the Result
+# Step 9 — Verify the Result
 
-The final intended state is:
+The intended final state is:
 
 ```text
 Firmware:
@@ -282,64 +332,162 @@ PS3HEN 3.5.0
 
 ---
 
+# Why This Works
+
+The important part of the method is installing **HEN 3.6.0 first**.
+
+This gets the PS3 into a working HEN state.
+
+The **HEN 3.5.0 `HEN.pkg`** can then be installed manually through **Package Manager**, instead of relying on the online installer to determine which HEN version to install.
+
+The workaround can therefore be summarized as:
+
+> **Install 3.6.0 first, then manually install the 3.5.0 HEN.pkg through Package Manager.**
+
+This README documents the observed result on the tested configuration. It does not claim that this is an officially supported PS3HEN downgrade mechanism.
+
+---
+
 # Tested Configuration
 
-| Item                | Tested Version  |
+| Component           | Tested Version  |
 | ------------------- | --------------- |
-| Firmware            | HFW 4.93.1      |
+| PS3 Firmware        | HFW 4.93.1      |
 | Initial HEN         | PS3HEN 3.6.0    |
-| Package installed   | PS3HEN 3.5.0    |
+| Package Installed   | PS3HEN 3.5.0    |
 | Final HEN           | PS3HEN 3.5.0    |
-| Installation method | Package Manager |
-| USB filesystem      | FAT32           |
+| Installation Method | Package Manager |
+| USB Filesystem      | FAT32           |
+
+### Tested Result
+
+**HFW 4.93.1 → HEN 3.6.0 → HEN 3.5.0 `.pkg` → HEN 3.5.0**
+
+This method was successfully tested on one PS3 configuration.
 
 ---
 
-# Why Not Just Install 3.5.0 Directly?
+# Useful Resources
 
-The problem this guide addresses is that the normal online installation process can automatically offer/install the **latest available HEN version**, which in this situation is **3.6.0**.
+## HEN Alternate Installer for HFW 4.93
 
-Instead of fighting the online installer, this method uses the installer to get HEN working first and then manually installs the desired **3.5.0 package** through Package Manager.
+PSX-Place resource:
 
-The key part of the workaround is:
+https://www.psx-place.com/resources/hen-alternate-installer-for-hfw-4-93.1689/
 
-> **Install 3.6.0 first, then install the 3.5.0 HEN.pkg through Package Manager.**
+This resource may be useful for users working with HFW 4.93 and PS3HEN installation.
+
+## This Guide
+
+GitHub repository:
+
+https://github.com/TanishThakur77/PS3HEN-3.5.0-4.93.1-Guide
 
 ---
 
-# Important Warnings
+# Important Notes
 
-### This is not an official downgrade tool
+* This is **not an official PS3HEN downgrade guide**.
+* This guide documents a **community-tested workaround**.
+* The tested firmware was **HFW 4.93.1**.
+* Compatibility may vary between PS3 models and firmware configurations.
+* Always verify the HEN package version before installing it.
+* Do not randomly install packages from unknown sources.
+* Back up important PS3 data before modifying system software.
+* Do not shut down the PS3 or remove the USB while a package is actively being installed.
+* If the PS3 freezes during browser-based installation, avoid repeatedly forcing shutdowns unless necessary.
+* This guide does not provide or redistribute HEN packages.
+* Obtain required files from appropriate original/legitimate sources.
 
-This repository does not claim that PS3HEN 3.6.0 → 3.5.0 is an officially supported downgrade process.
+---
 
-It documents a method that **worked on the author's PS3 configuration**.
+# Troubleshooting
 
-### Compatibility is not guaranteed
+## Package Manager does not show `HEN.pkg`
 
-The tested configuration was:
+Check the following:
+
+1. The USB is formatted as **FAT32**.
+2. The folder is named exactly:
+
+```text
+PS3
+```
+
+3. The file is located at:
+
+```text
+/PS3/HEN.pkg
+```
+
+4. The package has the `.pkg` extension.
+5. The USB is properly connected.
+6. The package is not corrupted.
+
+The intended structure is:
+
+```text
+USB/
+└── PS3/
+    └── HEN.pkg
+```
+
+---
+
+## HEN 3.6.0 is still showing
+
+Make sure that:
+
+1. The **3.5.0 `HEN.pkg`** was actually installed.
+2. The package installation completed successfully.
+3. You rebooted/re-enabled HEN if required.
+4. You are checking the HEN version using an appropriate method rather than assuming the version from the installer used previously.
+
+---
+
+## ★ Enable HEN does not appear
+
+Make sure the package installation completed successfully and that the PS3 has returned to the normal XMB.
+
+If necessary, restart the PS3 and check the Game column again.
+
+---
+
+## The PS3 freezes during browser installation
+
+Browser-based PS3HEN installation can sometimes behave unexpectedly.
+
+If the system becomes completely unresponsive, a forced restart may be necessary, but avoid repeatedly interrupting the console during system or package operations.
+
+Once HEN 3.6.0 is successfully installed, this guide's 3.5.0 portion uses **Package Manager rather than the browser**.
+
+---
+
+# Short Version
+
+If you already know what you're doing:
 
 ```text
 HFW 4.93.1
-PS3HEN 3.6.0
-PS3HEN 3.5.0 HEN.pkg
+     ↓
+Install HEN 3.6.0
+     ↓
+FAT32 USB
+     ↓
+USB:/PS3/HEN.pkg
+     ↓
+HEN 3.5.0 package
+     ↓
+Game → Package Manager
+     ↓
+Install Package Files → Standard
+     ↓
+Install HEN.pkg
+     ↓
+★ Enable HEN
+     ↓
+HEN 3.5.0
 ```
-
-Other HFW versions, PS3 models, or HEN versions may behave differently.
-
-### Do not randomly install packages
-
-Make sure you know exactly which HEN version your package contains before installing it.
-
-### Back up important data
-
-Modifying system software can potentially cause instability or data loss.
-
-Keep backups of important PS3 data before making changes.
-
-### Do not interrupt package installation
-
-Do not shut down the PS3 or remove the USB while a package is actively being installed.
 
 ---
 
@@ -367,11 +515,11 @@ This repository is an **independent community guide** and is not affiliated with
 
 This repository **does not redistribute `HEN.pkg`**.
 
-Users should obtain PS3HEN packages from the appropriate original/legitimate sources and follow the applicable licenses and distribution terms.
+Users should obtain PS3HEN packages from appropriate original/legitimate sources and follow the applicable licenses and distribution terms.
 
 ---
 
-# Feedback / Compatibility Reports
+# Compatibility Reports
 
 If you successfully use this method, consider reporting your configuration.
 
@@ -397,16 +545,16 @@ Package Manager: Successful
 Enable HEN: Successful
 ```
 
-More community reports can help determine whether this method works consistently across different PS3 configurations.
+Community reports can help determine whether this method works consistently across different PS3 configurations.
 
 ---
 
 # Disclaimer
 
-This repository is provided for informational and educational purposes.
+This README documents a community-tested procedure and is provided for informational and educational purposes.
 
-Modifying PS3 system software carries risks, including instability and potential data loss.
+The author is not responsible for data loss, system instability, failed installations, or other issues resulting from following these instructions.
 
-The author is not responsible for damage, data loss, system instability, or other problems resulting from following this guide.
+Modifying PS3 system software carries risks. Always back up important data and use appropriate original/legitimate files.
 
-Use the appropriate official/original PS3HEN files and make backups before modifying your system.
+**Tested configuration: HFW 4.93.1 → HEN 3.6.0 → HEN 3.5.0 via Package Manager.**
